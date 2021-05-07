@@ -1,7 +1,8 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
 
-const db = require('./config/database');
+import { db } from './config/database.js';
+
 const app = express();
 
 db.authenticate()
@@ -12,4 +13,4 @@ app.get('/', (req, res) => res.send('INDEX'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

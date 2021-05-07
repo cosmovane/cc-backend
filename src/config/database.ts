@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize');
+import { Sequelize } from 'sequelize';
 
-module.exports = new Sequelize('hospitaltodo', 'postgres', 'root', {
+export const db = new Sequelize('hospitaltodo', 'postgres', 'root', {
   host: 'localhost',
   dialect: 'postgres',
 });
