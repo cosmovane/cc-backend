@@ -1,9 +1,20 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Model } from 'sequelize';
 
 import { db } from '../config/database.js';
 
-const Category = db.define('category', {
-  name: {
-    type: Sequelize.STRING,
-  },
-});
+interface CategoryAttributes {
+  id?: number;
+  name: string;
+}
+
+interface CategoryModel extends CategoryAttributes {}
+
+export const Category = db.define<CategoryAttributes, CategoryModel>(
+  'category',
+  {
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+  }
+);
