@@ -10,6 +10,15 @@ categoryRouter.get('/', (req, res) =>
     .catch((err) => console.log(err))
 );
 
+categoryRouter.get('/:id', (req, res) => {
+  const id = req.params.id;
+  Category.findOne({
+    where: { id },
+  })
+    .then((lists) => res.json(lists))
+    .catch((err) => console.log(err));
+});
+
 categoryRouter.post('/', async (req, res) => {
   console.log('req: ', req.body);
   const { name } = req.body;
