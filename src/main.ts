@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { db } from './config/database.js';
 import categoryRouter from './routes/category.js';
+import itemRouter from './routes/items.js';
 import listRouter from './routes/list.js';
 
 const app = express();
@@ -30,8 +31,9 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', (req, res) => res.send('INDEX'));
-app.use('/category', categoryRouter);
-app.use('/list', listRouter);
+app.use('/categories', categoryRouter);
+app.use('/lists', listRouter);
+app.use('/items', itemRouter);
 
 const PORT = process.env.PORT || 5000;
 
