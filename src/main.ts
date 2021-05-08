@@ -9,25 +9,9 @@ import itemRouter from './routes/items.js';
 import listRouter from './routes/list.js';
 import swaggerSpec from './swagger.json';
 
-// const swaggerDefinition = {
-//   openapi: '3.0.0',
-//   info: {
-//     title: 'Express API for JSONPlaceholder',
-//     version: '1.0.0',
-//   },
-// };
-
-// const options = {
-//   swaggerDefinition,
-//   // Paths to files containing OpenAPI definitions
-//   apis: ['./routes/*.js'],
-// };
-
-// const swaggerSpec = swaggerJSDoc(options);
-
 const app = express();
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 db.authenticate()
   .then(() => console.log('Database connected'))
