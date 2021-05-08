@@ -1,14 +1,33 @@
 import express from 'express';
 import path from 'path';
-import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
 import { db } from './config/database.js';
 import categoryRouter from './routes/category.js';
 import itemRouter from './routes/items.js';
 import listRouter from './routes/list.js';
+import swaggerSpec from './swagger.json';
+
+// const swaggerDefinition = {
+//   openapi: '3.0.0',
+//   info: {
+//     title: 'Express API for JSONPlaceholder',
+//     version: '1.0.0',
+//   },
+// };
+
+// const options = {
+//   swaggerDefinition,
+//   // Paths to files containing OpenAPI definitions
+//   apis: ['./routes/*.js'],
+// };
+
+// const swaggerSpec = swaggerJSDoc(options);
 
 const app = express();
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 db.authenticate()
   .then(() => console.log('Database connected'))
@@ -16,19 +35,6 @@ db.authenticate()
 
 app.use(express.json());
 app.use(express.urlencoded());
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: 'Hospital To-do',
-      decription: 'To-do app for surgery department ',
-      version: '1.0.0',
-    },
-  },
-  apis: ['main.js'],
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', (req, res) => res.send('INDEX'));
 app.use('/categories', categoryRouter);

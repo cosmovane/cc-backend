@@ -12,6 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "paths": {
       "*": [
         "node_modules/*"

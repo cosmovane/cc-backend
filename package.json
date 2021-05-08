@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start:prod": "node dist/main",
-    "start:dev": "npm run build && node .",
+    "start:dev": "npm run build && node --experimental-json-modules .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
