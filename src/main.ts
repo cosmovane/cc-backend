@@ -1,6 +1,4 @@
 import express from 'express';
-import path from 'path';
-import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
 import { db } from './config/database.js';
@@ -28,3 +26,5 @@ app.use('/items', itemRouter);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+export default app;

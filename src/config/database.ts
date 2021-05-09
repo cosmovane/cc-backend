@@ -1,6 +1,11 @@
 import { Sequelize } from 'sequelize';
 
-export const db = new Sequelize('hospitaltodo', 'postgres', 'root', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+export const db = new Sequelize(
+  'qfkiwvkk',
+  'qfkiwvkk',
+  'SXKJkuPTVkSP5p7cYChWstbkHPoEZ8Ps',
+  {
+    host: 'queenie.db.elephantsql.com',
+    dialect: 'postgres',
+  }
+);
