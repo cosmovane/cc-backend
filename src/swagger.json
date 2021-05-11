@@ -30,7 +30,7 @@
             "name": "order",
             "in": "query",
             "description": "Categories ordered by ID, it only accepts DESC, the default is ASC",
-            "required": true,
+            "required": false,
             "type": "string",
             "format": "int32"
           }
@@ -102,7 +102,7 @@
             "name": "order",
             "in": "query",
             "description": "Lists ordered by ID, it only accepts DESC, the default is ASC",
-            "required": true,
+            "required": false,
             "type": "string",
             "format": "int32"
           }
@@ -185,7 +185,7 @@
             "name": "order",
             "in": "query",
             "description": "Items ordered by ID, it only accepts DESC, the default is ASC",
-            "required": true,
+            "required": false,
             "type": "string",
             "format": "int32"
           }
