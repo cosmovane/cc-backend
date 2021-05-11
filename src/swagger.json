@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "https://hospitaltodo2021.herokuapp.com",
+  "host": "hospitaltodo2021.herokuapp.com",
   "basePath": "/",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],
