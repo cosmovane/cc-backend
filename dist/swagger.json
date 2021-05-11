@@ -1,0 +1,721 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Hospital To-Do App",
+        "description": "To-Do App for Surgery Department",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/categories": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Categories"
+                    }
+                ],
+                "description": "Returns all existing categories",
+                "summary": "Returns all categories",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Categories Response",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "post": { "tags": [
+                    {
+                        "name": "Categories"
+                    }
+                ],
+                "summary": "Create a category",
+                "operationId": "createCategory",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Name of the new Category",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category Created",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/lists": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Lists"
+                    }
+                ],
+                "description": "Returns all existing Lists",
+                "summary": "Returns all Lists",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "List Response",
+                        "schema": {
+                            "$ref": "#/definitions/List"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "post": { "tags": [
+                    {
+                        "name": "Lists"
+                    }
+                ],
+                "summary": "Create a List",
+                "operationId": "createList",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Name of the new List",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewList"
+                        }
+                    },
+                    {
+                        "name": "categoryId",
+                        "in": "body",
+                        "description": "Id of Category",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Created",
+                        "schema": {
+                            "$ref": "#/definitions/List"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/items": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Items"
+                    }
+                ],
+                "description": "Returns all existing Items",
+                "summary": "Returns all Items",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Item Response",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "post": { "tags": [
+                    {
+                        "name": "Items"
+                    }
+                ],
+                "summary": "Create a Item",
+                "operationId": "createItem",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "Name of the new Item",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewItem"
+                        }
+                    },
+                    {
+                        "name": "listId",
+                        "in": "body",
+                        "description": "Id of List",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewItem"
+                        }
+                    },
+                    {
+                        "name": "done",
+                        "in": "body",
+                        "description": "Boolean for finished/unfinished item",
+                        "required": true,
+                        "type": "boolean",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Item Created",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Categories"
+                    }
+                ],
+                "description": "Returns a single category",
+                "summary": "Returns a single category",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Category to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Categories Response",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    {
+                        "name": "Categories"
+                    }
+                ],
+                "summary": "Updates a category",
+                "operationId": "updateCategory",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "New name for the Category",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewCategory"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "New name of Category",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category Updated",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    {
+                        "name": "Categories"
+                    }
+                ],
+                "description": "Deletes a single category",
+                "summary": "Deletes a category",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Categories Response",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/lists/{id}": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Lists"
+                    }
+                ],
+                "description": "Returns a single list",
+                "summary": "Returns a single list",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of list to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "List Response",
+                        "schema": {
+                            "$ref": "#/definitions/List"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    {
+                        "name": "Lists"
+                    }
+                ],
+                "summary": "Updates a List",
+                "operationId": "updateCategory",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "New data of List",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewList"
+                        }
+                    },
+                    {
+                        "name": "categoryId",
+                        "in": "body",
+                        "description": "Id of Category",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewList"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "New data of List",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Updated",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    {
+                        "name": "Lists"
+                    }
+                ],
+                "description": "Deletes a single list",
+                "summary": "Deletes a category",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "List Response",
+                        "schema": {
+                            "$ref": "#/definitions/List"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/{id}": {
+            "get": {
+                "tags": [
+                    {
+                        "name": "Items"
+                    }
+                ],
+                "description": "Returns a single item",
+                "summary": "Returns a single item",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of item to return",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Item Response",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    {
+                        "name": "Items"
+                    }
+                ],
+                "summary": "Updates a Item",
+                "operationId": "updateItem",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "description": "New data of Item",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewItem"
+                        }
+                    },
+                    {
+                        "name": "listId",
+                        "in": "body",
+                        "description": "Id of list",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewItem"
+                        }
+                    },
+                    {
+                        "name": "done",
+                        "in": "body",
+                        "description": "Boolean for finished/unfinished item",
+                        "required": true,
+                        "type": "boolean",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "New data of Item",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "schema": {
+                            "$ref": "#/definitions/NewItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Item Updated",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    {
+                        "name": "Items"
+                    }
+                ],
+                "description": "Deletes a single Item",
+                "summary": "Deletes a category",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Item Response",
+                        "schema": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    },
+                    "default": {
+                        "description": "An error occurred", "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Category": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewCategory": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "List": {
+            "type": "object",
+            "required": [
+                "name", "categoryId"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "categoryId": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewList": {
+            "type": "object",
+            "required": [
+                "name", "categoryId"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "categoryId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Item": {
+            "type": "object",
+            "required": [
+                "description", "listId", "done"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "listId": {
+                    "type": "integer"
+                },
+                "done": {
+                    "type": "boolean"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "NewItem": {
+            "type": "object",
+            "required": [
+                "description", "listId", "done"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "listId": {
+                    "type": "integer"
+                },
+                "done": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ErrorModel": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
