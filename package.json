@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start:prod": "node dist/main",
+    "start:prod": "node --experimental-json-modules dist/main",
     "start:dev": "npm run build && node --experimental-json-modules .",
     "test": "jest",
     "test:watch": "jest --watch"
