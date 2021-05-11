@@ -9,9 +9,9 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:5000",
+  "host": "https://hospitaltodo2021.herokuapp.com",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths":{
@@ -705,14 +705,9 @@
     "ErrorModel": {
       "type": "object",
       "required": [
-        "code",
         "message"
       ],
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
         "message": {
           "type": "string"
         }
