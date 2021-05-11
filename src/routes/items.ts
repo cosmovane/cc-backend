@@ -6,7 +6,10 @@ const itemRouter = express.Router();
 
 itemRouter.get('/', async (req, res) => {
   try {
-    await Item.findAll()
+    const order = req.query['order'] ? 'DESC' : 'ASC';
+    await Item.findAll({
+      order: [['id', order]],
+    })
       .then((items) => {
         res.status(200);
         res.json(items);

@@ -25,6 +25,16 @@
                 "description": "Returns all existing categories",
                 "summary": "Returns all categories",
                 "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Categories ordered by ID, it only accepts DESC, the default is ASC",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Categories Response",
@@ -54,7 +64,7 @@
                         "in": "body",
                         "description": "Name of the new Category",
                         "required": true,
-                        "type": "integer",
+                        "type": "string",
                         "format": "int32",
                         "schema": {
                             "$ref": "#/definitions/NewCategory"
@@ -87,6 +97,16 @@
                 "description": "Returns all existing Lists",
                 "summary": "Returns all Lists",
                 "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Lists ordered by ID, it only accepts DESC, the default is ASC",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "List Response",
@@ -160,6 +180,16 @@
                 "description": "Returns all existing Items",
                 "summary": "Returns all Items",
                 "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Items ordered by ID, it only accepts DESC, the default is ASC",
+                        "required": true,
+                        "type": "string",
+                        "format": "int32"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Item Response",

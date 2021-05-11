@@ -12,7 +12,10 @@ import { Category } from '../modules/Category.js';
 const categoryRouter = express.Router();
 categoryRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield Category.findAll()
+        const order = req.query['order'] ? 'DESC' : 'ASC';
+        yield Category.findAll({
+            order: [['id', order]],
+        })
             .then((categories) => {
             res.status(200);
             res.json(categories);

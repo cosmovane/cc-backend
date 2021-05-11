@@ -12,7 +12,10 @@ import { Item } from '../modules/Item.js';
 const itemRouter = express.Router();
 itemRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield Item.findAll()
+        const order = req.query['order'] ? 'DESC' : 'ASC';
+        yield Item.findAll({
+            order: [['id', order]],
+        })
             .then((items) => {
             res.status(200);
             res.json(items);

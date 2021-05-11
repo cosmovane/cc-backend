@@ -6,7 +6,10 @@ const listRouter = express.Router();
 
 listRouter.get('/', async (req, res) => {
   try {
-    await List.findAll()
+    const order = req.query['order'] ? 'DESC' : 'ASC';
+    await List.findAll({
+      order: [['id', order]],
+    })
       .then((lists) => {
         res.status(200);
         res.json(lists);

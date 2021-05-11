@@ -6,7 +6,10 @@ const categoryRouter = express.Router();
 
 categoryRouter.get('/', async (req, res) => {
   try {
-    await Category.findAll()
+    const order = req.query['order'] ? 'DESC' : 'ASC';
+    await Category.findAll({
+      order: [['id', order]],
+    })
       .then((categories) => {
         res.status(200);
         res.json(categories);

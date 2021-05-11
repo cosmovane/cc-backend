@@ -12,7 +12,10 @@ import { List } from '../modules/List.js';
 const listRouter = express.Router();
 listRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield List.findAll()
+        const order = req.query['order'] ? 'DESC' : 'ASC';
+        yield List.findAll({
+            order: [['id', order]],
+        })
             .then((lists) => {
             res.status(200);
             res.json(lists);
