@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
-export const db = new Sequelize('qfkiwvkk', 'qfkiwvkk', 'SXKJkuPTVkSP5p7cYChWstbkHPoEZ8Ps', {
+import dotenv from 'dotenv';
+dotenv.config();
+export const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: 'queenie.db.elephantsql.com',
     dialect: 'postgres',
 });
