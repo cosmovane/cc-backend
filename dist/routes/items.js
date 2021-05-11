@@ -12,16 +12,19 @@ import { Item } from '../modules/Item.js';
 const itemRouter = express.Router();
 itemRouter.get('/', (req, res) => {
     try {
+        res.status(200);
         Item.findAll()
             .then((items) => res.json(items))
             .catch((err) => console.log(err));
     }
     catch (error) {
+        res.status(400);
         throw new Error(error.message);
     }
 });
 itemRouter.get('/:id', (req, res) => {
     try {
+        res.status(200);
         const id = req.params.id;
         Item.findOne({
             where: { id },
@@ -30,11 +33,13 @@ itemRouter.get('/:id', (req, res) => {
             .catch((err) => console.log(err));
     }
     catch (error) {
+        res.status(400);
         throw new Error(error.message);
     }
 });
 itemRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        res.status(201);
         const { description, done, listId, completedAt } = req.body;
         const newItem = yield Item.create({
             description,
@@ -44,20 +49,26 @@ itemRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
         return res.json(newItem);
     }
-    catch (error) { }
+    catch (error) {
+        res.status(400);
+        throw new Error(error.message);
+    }
 }));
 itemRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        res.status(200);
         const { description, done, listId, completedAt } = req.body;
         const newItem = yield Item.update({ description, done, listId, completedAt }, { returning: true, where: { id: req.params.id } });
         return res.json(newItem);
     }
     catch (error) {
+        res.status(400);
         throw new Error(error.message);
     }
 }));
 itemRouter.delete('/:id', (req, res) => {
     try {
+        res.status(204);
         const id = req.params.id;
         Item.destroy({
             where: { id: id },
@@ -66,6 +77,7 @@ itemRouter.delete('/:id', (req, res) => {
         });
     }
     catch (error) {
+        res.status(400);
         throw new Error(error.message);
     }
 });

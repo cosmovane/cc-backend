@@ -6,16 +6,19 @@ const itemRouter = express.Router();
 
 itemRouter.get('/', (req, res) => {
   try {
+    res.status(200);
     Item.findAll()
       .then((items) => res.json(items))
       .catch((err) => console.log(err));
   } catch (error) {
+    res.status(400);
     throw new Error(error.message);
   }
 });
 
 itemRouter.get('/:id', (req, res) => {
   try {
+    res.status(200);
     const id = req.params.id;
     Item.findOne({
       where: { id },
@@ -23,12 +26,14 @@ itemRouter.get('/:id', (req, res) => {
       .then((items) => res.json(items))
       .catch((err) => console.log(err));
   } catch (error) {
+    res.status(400);
     throw new Error(error.message);
   }
 });
 
 itemRouter.post('/', async (req, res) => {
   try {
+    res.status(201);
     const { description, done, listId, completedAt } = req.body;
     const newItem = await Item.create({
       description,
@@ -37,11 +42,15 @@ itemRouter.post('/', async (req, res) => {
       completedAt,
     });
     return res.json(newItem);
-  } catch (error) {}
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
 });
 
 itemRouter.put('/:id', async (req, res) => {
   try {
+    res.status(200);
     const { description, done, listId, completedAt } = req.body;
     const newItem = await Item.update(
       { description, done, listId, completedAt },
@@ -49,12 +58,14 @@ itemRouter.put('/:id', async (req, res) => {
     );
     return res.json(newItem);
   } catch (error) {
+    res.status(400);
     throw new Error(error.message);
   }
 });
 
 itemRouter.delete('/:id', (req, res) => {
   try {
+    res.status(204);
     const id = req.params.id;
     Item.destroy({
       where: { id: id },
@@ -62,6 +73,7 @@ itemRouter.delete('/:id', (req, res) => {
       res.json(deletedItem);
     });
   } catch (error) {
+    res.status(400);
     throw new Error(error.message);
   }
 });
