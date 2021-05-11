@@ -12,7 +12,7 @@ db.authenticate()
     .catch((err) => console.log(`Error: ${err}`));
 app.use(express.json());
 app.use(express.urlencoded());
-app.get('/', (req, res) => res.send('INDEX'));
+app.get('/', (req, res) => res.send('HOSPITAL TODO'));
 app.use('/categories', categoryRouter);
 app.use('/lists', listRouter);
 app.use('/items', itemRouter);

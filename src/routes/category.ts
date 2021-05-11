@@ -1,77 +1,94 @@
 import express from 'express';
-import http from 'http';
 
 import { Category } from '../modules/Category.js';
 
 const categoryRouter = express.Router();
 
-categoryRouter.get('/', (req, res) => {
+categoryRouter.get('/', async (req, res) => {
   try {
-    res.status(200);
-    return Category.findAll()
-      .then((categories) => res.json(categories))
-      .catch((err) => console.log(err));
+    await Category.findAll()
+      .then((categories) => {
+        res.status(200);
+        res.json(categories);
+      })
+      .catch(() => {
+        res.status(404);
+        res.end(JSON.stringify({ message: 'Not Found' }));
+      });
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-categoryRouter.get('/:id', (req, res) => {
+categoryRouter.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    res.status(200);
-    Category.findOne({
+    const category = await Category.findOne({
       where: { id },
-    })
-      .then((lists) => res.json(lists))
-      .catch((err) => console.log(err));
+    });
+    if (category === null) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(category).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
 categoryRouter.post('/', async (req, res) => {
-  const { name } = req.body;
   try {
-    res.status(201);
-    const newCategory = await Category.create({ name });
-    return res.json(newCategory);
+    const { name } = req.body;
+    await Category.create({ name }).then((newCategory) => {
+      res.status(201);
+      res.json(newCategory).end();
+    });
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
 categoryRouter.put('/:id', async (req, res) => {
-  const { name } = req.body;
-
   try {
-    res.status(200);
-    const newCategory = await Category.update(
+    const { name } = req.body;
+    const category = await Category.update(
       { name },
       { returning: true, where: { id: req.params.id } }
     );
-    return res.json(newCategory);
+    if (category[0] === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(category).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-categoryRouter.delete('/:id', (req, res) => {
+categoryRouter.delete('/:id', async (req, res) => {
   try {
-    res.status(204);
     const id = req.params.id;
-    Category.destroy({
+    const category = await Category.destroy({
       where: { id: id },
-    }).then((deletedCategory) => {
-      res.json(deletedCategory);
     });
+    if (category === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(204);
+      res.end(JSON.stringify({ message: 'Category deleted' }));
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 

@@ -742,12 +742,9 @@
         "ErrorModel": {
             "type": "object",
             "required": [
-                "code", "message"
+                "message"
             ],
             "properties": {
-                "code": {
-                    "type": "number"
-                },
                 "message": {
                     "type": "string"
                 }

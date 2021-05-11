@@ -4,77 +4,97 @@ import { Item } from '../modules/Item.js';
 
 const itemRouter = express.Router();
 
-itemRouter.get('/', (req, res) => {
+itemRouter.get('/', async (req, res) => {
   try {
-    res.status(200);
-    Item.findAll()
-      .then((items) => res.json(items))
-      .catch((err) => console.log(err));
+    await Item.findAll()
+      .then((items) => {
+        res.status(200);
+        res.json(items);
+      })
+      .catch(() => {
+        res.status(404);
+        res.end(JSON.stringify({ message: 'Not Found' }));
+      });
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-itemRouter.get('/:id', (req, res) => {
+itemRouter.get('/:id', async (req, res) => {
   try {
-    res.status(200);
     const id = req.params.id;
-    Item.findOne({
+    const item = await Item.findOne({
       where: { id },
-    })
-      .then((items) => res.json(items))
-      .catch((err) => console.log(err));
+    });
+    if (item === null) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(item).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
 itemRouter.post('/', async (req, res) => {
   try {
-    res.status(201);
     const { description, done, listId, completedAt } = req.body;
-    const newItem = await Item.create({
+    await Item.create({
       description,
       done,
       listId,
       completedAt,
+    }).then((newItem) => {
+      res.status(201);
+      res.json(newItem).end();
     });
-    return res.json(newItem);
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
 itemRouter.put('/:id', async (req, res) => {
   try {
-    res.status(200);
     const { description, done, listId, completedAt } = req.body;
-    const newItem = await Item.update(
+    const item = await Item.update(
       { description, done, listId, completedAt },
       { returning: true, where: { id: req.params.id } }
     );
-    return res.json(newItem);
+    if (item[0] === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(item).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-itemRouter.delete('/:id', (req, res) => {
+itemRouter.delete('/:id', async (req, res) => {
   try {
     res.status(204);
     const id = req.params.id;
-    Item.destroy({
+    const item = await Item.destroy({
       where: { id: id },
-    }).then((deletedItem) => {
-      res.json(deletedItem);
     });
+    if (item === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(204);
+      res.end(JSON.stringify({ message: 'Item deleted' }));
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 

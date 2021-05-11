@@ -10,71 +10,93 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import express from 'express';
 import { Category } from '../modules/Category.js';
 const categoryRouter = express.Router();
-categoryRouter.get('/', (req, res) => {
+categoryRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.status(200);
-        return Category.findAll()
-            .then((categories) => res.json(categories))
-            .catch((err) => console.log(err));
-    }
-    catch (error) {
-        res.status(400);
-        throw new Error(error.message);
-    }
-});
-categoryRouter.get('/:id', (req, res) => {
-    try {
-        const id = req.params.id;
-        res.status(200);
-        Category.findOne({
-            where: { id },
+        yield Category.findAll()
+            .then((categories) => {
+            res.status(200);
+            res.json(categories);
         })
-            .then((lists) => res.json(lists))
-            .catch((err) => console.log(err));
-    }
-    catch (error) {
-        res.status(400);
-        throw new Error(error.message);
-    }
-});
-categoryRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name } = req.body;
-    try {
-        res.status(201);
-        const newCategory = yield Category.create({ name });
-        return res.json(newCategory);
-    }
-    catch (error) {
-        res.status(400);
-        throw new Error(error.message);
-    }
-}));
-categoryRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name } = req.body;
-    try {
-        res.status(200);
-        const newCategory = yield Category.update({ name }, { returning: true, where: { id: req.params.id } });
-        return res.json(newCategory);
-    }
-    catch (error) {
-        res.status(400);
-        throw new Error(error.message);
-    }
-}));
-categoryRouter.delete('/:id', (req, res) => {
-    try {
-        res.status(204);
-        const id = req.params.id;
-        Category.destroy({
-            where: { id: id },
-        }).then((deletedCategory) => {
-            res.json(deletedCategory);
+            .catch(() => {
+            res.status(404);
+            res.end(JSON.stringify({ message: 'Not Found' }));
         });
     }
     catch (error) {
         res.status(400);
-        throw new Error(error.message);
+        res.end(JSON.stringify({ error: error.message }));
     }
-});
+}));
+categoryRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const category = yield Category.findOne({
+            where: { id },
+        });
+        if (category === null) {
+            res.status(404);
+            res.end(JSON.stringify({ message: 'Not Found' }));
+        }
+        else {
+            res.status(200);
+            res.json(category).end();
+        }
+    }
+    catch (error) {
+        res.status(400);
+        res.end(JSON.stringify({ error: error.message }));
+    }
+}));
+categoryRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name } = req.body;
+        yield Category.create({ name }).then((newCategory) => {
+            res.status(201);
+            res.json(newCategory).end();
+        });
+    }
+    catch (error) {
+        res.status(400);
+        res.end(JSON.stringify({ error: error.message }));
+    }
+}));
+categoryRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name } = req.body;
+        const category = yield Category.update({ name }, { returning: true, where: { id: req.params.id } });
+        if (category[0] === 0) {
+            res.status(404);
+            res.end(JSON.stringify({ message: 'Not Found' }));
+        }
+        else {
+            res.status(200);
+            res.json(category).end();
+        }
+    }
+    catch (error) {
+        res.status(400);
+        res.end(JSON.stringify({ error: error.message }));
+    }
+}));
+categoryRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const category = yield Category.destroy({
+            where: { id: id },
+        });
+        if (category === 0) {
+            res.status(404);
+            res.end(JSON.stringify({ message: 'Not Found' }));
+        }
+        else {
+            res.status(204);
+            res.end(JSON.stringify({ message: 'Category deleted' }));
+        }
+    }
+    catch (error) {
+        res.status(400);
+        res.end(JSON.stringify({ error: error.message }));
+    }
+}));
 export default categoryRouter;
 //# sourceMappingURL=category.js.map

@@ -4,30 +4,41 @@ import { List } from '../modules/List.js';
 
 const listRouter = express.Router();
 
-listRouter.get('/', (req, res) => {
+listRouter.get('/', async (req, res) => {
   try {
-    res.status(200);
-    List.findAll()
-      .then((lists) => res.json(lists))
-      .catch((err) => console.log(err));
+    await List.findAll()
+      .then((lists) => {
+        res.status(200);
+        res.json(lists);
+      })
+      .catch(() => {
+        res.status(404);
+        res.end(JSON.stringify({ message: 'Not Found' }));
+      });
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-listRouter.get('/:id', (req, res) => {
+listRouter.get('/:id', async (req, res) => {
   try {
     res.status(200);
     const id = req.params.id;
-    List.findOne({
+    const list = await List.findOne({
       where: { id },
-    })
-      .then((lists) => res.json(lists))
-      .catch((err) => console.log(err));
+    });
+    if (list === null) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(list).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
@@ -35,41 +46,55 @@ listRouter.post('/', async (req, res) => {
   try {
     res.status(201);
     const { name, categoryId } = req.body;
-    const newList = await List.create({ name, categoryId });
-    return res.json(newList);
+    await List.create({ name, categoryId }).then((newList) => {
+      res.status(201);
+      res.json(newList).end();
+    });
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
 listRouter.put('/:id', async (req, res) => {
   try {
-    res.status(200);
     const { name, categoryId } = req.body;
-    const newList = await List.update(
+    const list = await List.update(
       { name, categoryId },
       { returning: true, where: { id: req.params.id } }
     );
-    return res.json(newList);
+    if (list[0] === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(200);
+      res.json(list).end();
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
-listRouter.delete('/:id', (req, res) => {
+listRouter.delete('/:id', async (req, res) => {
   try {
-    res.status(204);
     const id = req.params.id;
-    List.destroy({
+    const list = await List.destroy({
       where: { id: id },
-    }).then((deletedList) => {
-      res.json(deletedList);
     });
+    if (list === 0) {
+      res.status(404);
+      res.end(JSON.stringify({ message: 'Not Found' }));
+    } else {
+      res.status(204);
+      res.end(JSON.stringify({ message: 'List deleted' }));
+    }
   } catch (error) {
     res.status(400);
-    throw new Error(error.message);
+
+    res.end(JSON.stringify({ error: error.message }));
   }
 });
 
