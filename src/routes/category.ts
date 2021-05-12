@@ -5,6 +5,7 @@ import { Category } from '../modules/Category.js';
 const categoryRouter = express.Router();
 
 categoryRouter.get('/', async (req, res) => {
+  console.log('req:get ', req.method);
   try {
     const order = req.query['order'] ? 'DESC' : 'ASC';
     await Category.findAll({
@@ -44,6 +45,7 @@ categoryRouter.get('/:id', async (req, res) => {
 });
 
 categoryRouter.post('/', async (req, res) => {
+  console.log('req:post ', req.method);
   try {
     const { name } = req.body;
     await Category.create({ name }).then((newCategory) => {
