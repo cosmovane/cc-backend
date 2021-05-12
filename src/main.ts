@@ -1,5 +1,6 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 import { db } from './config/database.js';
 import categoryRouter from './routes/category.js';
@@ -15,6 +16,7 @@ db.authenticate()
   .then(() => console.log('Database connected'))
   .catch((err) => console.log(`Error: ${err}`));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 

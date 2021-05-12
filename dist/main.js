@@ -1,5 +1,6 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import { db } from './config/database.js';
 import categoryRouter from './routes/category.js';
 import itemRouter from './routes/items.js';
@@ -10,6 +11,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 db.authenticate()
     .then(() => console.log('Database connected'))
     .catch((err) => console.log(`Error: ${err}`));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.get('/', (req, res) => res.send('HOSPITAL TODO'));
