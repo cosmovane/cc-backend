@@ -9,7 +9,10 @@ Items belong to Lists and Lists belong to Categories
 
 You must create a category first, then a List and finally an Item that belongs to the list
 
-FrontEnd App made with React: https://hospitaltodo.vercel.app/ 
+FrontEnd App made with React,
+Repository: https://github.com/cosmovane/hospitaltodo-frontend
+
+Deployed in https://hospitaltodo.vercel.app/ 
 
 DataBase Diagram:
 
