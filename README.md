@@ -1,7 +1,11 @@
 # hospitaltodo-backend
-Read full documentation and test the app in https://hospitaltodo2021.herokuapp.com/api-docs/
+Read full documentation and test the API in https://hospitaltodo2021.herokuapp.com/api-docs/
 
-This Express App allows to Create, Read, Update and Delete Categories, Lists and Items for a Surgery Department
+This API allows to Create, Read, Update and Delete Categories, Lists and Items for a Surgery Department
+
+Made with Express, Sequelize and PostgreSQL
+
+FrontEnd: 
 
 DataBase Diagram:
 
