@@ -1,11 +1,15 @@
 # hospitaltodo-backend
-Read full documentation and test the API in https://hospitaltodo2021.herokuapp.com/api-docs/
+Test the API in https://hospitaltodo2021.herokuapp.com/api-docs/
 
 This API allows to Create, Read, Update and Delete Categories, Lists and Items for a Surgery Department
 
 Made with Express, Sequelize and PostgreSQL
 
-FrontEnd: 
+Items belong to Lists and Lists belong to Categories
+
+You must create a category first, then a List and finally an Item that belongs to the list
+
+FrontEnd App made with React: https://hospitaltodo.vercel.app/ 
 
 DataBase Diagram:
 
